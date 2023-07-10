@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>硬體裝修丙級 指令、程式碼參考</title>
+    <style>
+        code{
+            background-color: black;
+            color: #fff;
+        }
+        
+    </style>
+</head>
+<body>
+
+<h2>基礎資料設定</h2>
+<label for="num">崗位號碼:</label><input name="num" type="number" max="50" min="1" id="num" maxlength="2" /><br>
+<div id="color_area">
+<span>顏色:</span><br><input name="color" type="radio" id="color" value="red" onclick="color_val = 'red'" checked/><label style="color: red;" >紅</label><br><input name="color" type="radio" id="color" onclick="color_val = 'green'" value="green"/><label style="color: green;" >綠</label><br><input name="color" type="radio" onclick="color_val = 'blue'" id="color" value="blue"/><label style="color: blue;" >藍</label>
+</div>
+<br>
+<label for="name">姓名:</label><input maxlength="3" name="name" type="text" value="" id="name" />
+
+<!--精簡-->
+<h2>index.htm結果</h2>
+<div id="htm">
+    <h3 style="color:red">工作崗位號碼:<span id="num_text">xx</span><br>檢定日期:2023/07/12<br>應檢人姓名:<span id="name_text">xxx</span></h3>
+</div>
+<h2>index.htm程式碼</h2>
+<textarea id="htm_code" style="width: 100%;" rows="3" readonly><h3 style="color:red">工作崗位號碼:xx<br>檢定日期:2023/07/12<br>應檢人姓名:xxx</h3></textarea>
+<!--wimdows-->
+<h2>windows 自動排成.bat</h2>
+<br><code>copy C:\Windows\System32\drivers\etc\hosts D:\<span id="num_text_1">{xx}</span>\</code> *{xx}應為工作崗位號碼補至二位數*
+<!--linux-->
+<h2>Linux指令</h2>
+<br><code>sudo passwd root</code> 在普通使用者指令介面修改root密碼
+
+<br><code>ssh t<span id="num_text_2">{xx}</span>@192.168.240.200</code> 連線至應丙試場伺服器指令模式 *{xx}應為工作崗位號碼補至二位數*
+<br><code>passwd</code> 修改、設定當前登入使用者密碼
+
+<br><code>adduser {xxx}</code> 新增一個名為{xxx}的使用者帳號 *{xxx}應為試題卷上指定Linux帳號名稱*
+<br><code>passwd {xxx}</code> 修改、設定使用者名稱為{xxx}的密碼 *{xxx}應為試題卷上指定Linux帳號名稱*
+<br><code>crontab -e</code> 編輯自動排成 i輸入模式 Esc退出模式 :wq儲存並退出 **:w儲存 :q退出**
+<br><code>*/{x} * * * * cp /etc/hosts /data</code> 每{x}分鐘複製一次hosts檔案到data資料夾 *{x}應為試題卷上指定Linux複製檔案重複間隔時間*
+<br><code>crontab -l</code> 顯示自動排成列表 cat crontab
+<br><code>systemctl restart crond</code> 重新載入crontab
+<br><code>//192.168.240.{xxx}/data /data cifs username={windows user name},password={windows user password}</code> fstab 同步程式碼 *{xxx}應為Windows IP* 
+<script>
+    color_val = 'red';
+    let htm_code = document.querySelector("textarea#htm_code");
+    let num_inp = document.querySelector("input#num");
+    let num_text = document.querySelector("span#num_text");
+    htm_code_1 = '<h3 style="color:';
+    htm_code_2 = '">工作崗位號碼:';
+    htm_code_3 = '<br>檢定日期:2023/07/12<br>應檢人姓名:';
+    htm_code_4 = '</h3>';
+    num_inp.addEventListener("change",function(){
+        if(num_inp.value < 10 && num_inp.value >= 1 && !num_inp.value.includes(0)){
+            num_inp.value = "0"+num_inp.value;
+        }
+        if(num_inp.value.length > 2){
+            num_inp.value = num_inp.value.substr(0,2)
+        }
+        if(num_inp.value.length == 2){
+            console.log(num_inp.value)
+            num_text.innerHTML=num_inp.value;
+            num_text_1.innerHTML=num_inp.value;
+            num_text_2.innerHTML=num_inp.value;
+            code_update()
+        }
+        
+    });
+    num_inp.addEventListener("keyup",function(){
+        if(num_inp.value < 10 && num_inp.value >= 1 && !num_inp.value.includes(0)){
+            num_inp.value = "0"+num_inp.value;
+        }
+        if(num_inp.value.length > 2){
+            num_inp.value = num_inp.value.substr(1,3)
+        }
+        if(num_inp.value.length == 2){
+            console.log(num_inp.value)
+            num_text.innerHTML=num_inp.value;
+            num_text_1.innerHTML=num_inp.value;
+            num_text_2.innerHTML=num_inp.value;
+            code_update()
+        }
+    });
+    let color_inp = document.querySelector("div#color_area");
+    let htm_result = document.querySelector("div#htm>h3");
+    color_inp.addEventListener("click",function(){
+        console.log(color_val);
+        htm_result.style.color=color_val;
+        code_update()
+    });
+    
+    let name_inp = document.querySelector("input#name");
+    let name_text = document.querySelector("span#name_text");
+    name_inp.addEventListener("keyup",function(){
+        if(name_inp.value.length == 3){
+            console.log(name_inp.value)
+            name_text.innerHTML=name_inp.value;
+            code_update()
+        }
+        
+    });
+    function code_update(){
+        htm_code.value=htm_code_1+color_val+htm_code_2+num_inp.value+htm_code_3+name_inp.value+htm_code_4;
+    }
+</script>
+</body>
+</html>
