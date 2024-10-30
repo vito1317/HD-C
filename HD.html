@@ -17,7 +17,15 @@
 <h2>基礎資料設定</h2>
 <label for="num">崗位號碼:</label><input name="num" type="number" max="50" min="1" id="num" maxlength="2" /><br>
 <div id="color_area">
-<span>顏色:</span><br><input name="color" type="radio" id="color" value="red" onclick="color_val = 'red'" checked/><label for="red" style="color: red;" >紅</label><br><input name="color" type="radio" id="color" onclick="color_val = 'green'" value="green"/><label style="color: green;" >綠</label><br><input name="color" type="radio" onclick="color_val = 'blue'" id="color" value="blue"/><label style="color: blue;" >藍</label>
+<span>顏色:</span><br>
+<input name="color" type="radio" id="red" value="red" onclick="color_val = 'red'" checked/>
+<label for="red" style="color: red;">紅</label><br>
+
+<input name="color" type="radio" id="green" value="green" onclick="color_val = 'green'"/>
+<label for="green" style="color: green;">綠</label><br>
+
+<input name="color" type="radio" id="blue" value="blue" onclick="color_val = 'blue'"/>
+<label for="blue" style="color: blue;">藍</label>
 </div>
 <br>
 <label for="name">姓名:</label><input maxlength="3" name="name" type="text" value="" id="name" />
