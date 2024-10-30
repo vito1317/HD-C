@@ -24,7 +24,7 @@
 
 <h2>index.htm結果</h2>
 <div id="htm">
-    <h3 style="color:red">工作崗位號碼:<span id="num_text">xx</span><br>檢定日期:2023/07/12<br>應檢人姓名:<span id="name_text">xxx</span></h3>
+    <h3 style="color:red">工作崗位號碼:<span id="num_text">xx</span><br>檢定日期:xxxx/xx/xx<br>應檢人姓名:<span id="name_text">xxx</span></h3>
 </div>
 <h2>index.htm程式碼</h2>
 <textarea id="htm_code" style="width: 100%;" rows="3" readonly><h3 style="color:red">工作崗位號碼:xx<br>檢定日期:2023/07/12<br>應檢人姓名:xxx</h3></textarea>
@@ -50,8 +50,9 @@
     let num_text = document.querySelector("span#num_text");
     htm_code_1 = '<h3 style="color:';
     htm_code_2 = '">工作崗位號碼:';
-    htm_code_3 = '<br>檢定日期:2023/07/12<br>應檢人姓名:';
-    htm_code_4 = '</h3>';
+    htm_code_3 = '<br>檢定日期:';
+    htm_code_4 = '<br>應檢人姓名:'
+    htm_code_5 = '</h3>';
     num_inp.addEventListener("change",function(){
         if(num_inp.value < 10 && num_inp.value >= 1 && !num_inp.value.includes(0)){
             num_inp.value = "0"+num_inp.value;
@@ -101,9 +102,27 @@
         }
         
     });
-    function code_update(){
-        htm_code.value=htm_code_1+color_val+htm_code_2+num_inp.value+htm_code_3+name_inp.value+htm_code_4;
+    function date(){
+        let currentDate = new Date();
+
+        let year = currentDate.getFullYear();
+        let month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); 
+        let day = currentDate.getDate().toString().padStart(2, '0');
+
+        let formattedDate = `${year}/${month}/${day}`;
+
+        return formattedDate;
     }
+    function code_update(){
+        if(!name_inp & !num_inp){
+            htm_code.value=htm_code_1+color_val+htm_code_2+'xx'+htm_code_3+date()+htm_code_4+'xxx'+htm_code_5;
+            document.getElementById("htm").innerHTML = htm_code.value
+        }else{
+            htm_code.value=htm_code_1+color_val+htm_code_2+num_inp.value+htm_code_3+date()+htm_code_4+name_inp.value+htm_code_5;
+            document.getElementById("htm").innerHTML = htm_code.value
+        }
+    }
+    code_update()
 </script>
 </body>
 </html>
