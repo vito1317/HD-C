@@ -81,6 +81,12 @@ function code_update(){
     if(!name_inp.value && !num_inp.value){
         htm_code.value=htm_code_1+color_val+htm_code_2+'xx'+htm_code_3+date()+htm_code_4+'xxx'+htm_code_5;
         document.getElementById("htm").innerHTML = htm_code.value
+    }else if(!num_inp.value){
+        htm_code.value=htm_code_1+color_val+htm_code_2+'xx'+htm_code_3+date()+htm_code_4+name_inp.value+htm_code_5;
+        document.getElementById("htm").innerHTML = htm_code.value
+    }else if(name_inp.value.length < 3){
+        htm_code.value=htm_code_1+color_val+htm_code_2+num_inp.value+htm_code_3+date()+htm_code_4+'xxx'+htm_code_5;
+        document.getElementById("htm").innerHTML = htm_code.value
     }else{
         htm_code.value=htm_code_1+color_val+htm_code_2+num_inp.value+htm_code_3+date()+htm_code_4+name_inp.value+htm_code_5;
         document.getElementById("htm").innerHTML = htm_code.value
